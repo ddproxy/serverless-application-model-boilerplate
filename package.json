@@ -1,0 +1,33 @@
+{
+  "name": "sam-stereotype",
+  "version": "0.1.0",
+  "description": "NodeJS boilerplate handler, dispatch, and framework for AWS SAM",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.395.0",
+    "striptags": "^3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddproxy/sam-stereotype.git"
+  },
+  "keywords": [
+    "SAM",
+    "AWS",
+    "boilerplate",
+    "framework"
+  ],
+  "author": "Jon West <jon.c.west@outlook.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ddproxy/sam-stereotype/issues"
+  },
+  "homepage": "https://github.com/ddproxy/sam-stereotype#readme"
+}
