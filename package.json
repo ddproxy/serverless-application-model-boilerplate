@@ -1,6 +1,6 @@
 {
   "name": "sam-stereotype",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJS boilerplate handler, dispatch, and framework for AWS SAM",
   "main": "index.js",
   "directories": {
