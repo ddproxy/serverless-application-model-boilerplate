@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  TestSNS:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs8.10
+      Handler: index.handler
+      Description: Single SNS event handler test
+      CodeUri: ./dist/testSns
+      FunctionName: testSns
+      Timeout: 15
+      Events:
+        TestEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref TestTopic
+
+  TestTopic:
+    Type: AWS::SNS::Topic

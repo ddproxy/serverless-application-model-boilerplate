@@ -2,6 +2,8 @@
 .PHONY: compile validate build package deploy down
 
 BUCKET = sam-stereotype
+BUCKET_PREFIX = stereotype-files
+
 STACK = sam-stereotype-stack
 
 # EXECUTABLES are expected in your path - install if not present
@@ -22,6 +24,7 @@ build:
 package: build
 	sam package --template-file .aws-sam/build/template.yaml \
 	--s3-bucket=$(BUCKET) \
+	--s3-prefix=$(BUCKET_PREFIX) \
 	--output-template-file deployment.yaml
 
 deploy:

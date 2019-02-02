@@ -19,5 +19,8 @@ module.exports = {
   },
   externals: {
     'aws-sdk': 'aws-sdk'
+  },
+  optimization: {
+    minimize: false
   }
 };
