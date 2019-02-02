@@ -32,6 +32,8 @@ deploy:
 	--stack-name $(STACK) \
 	--capabilities CAPABILITY_IAM
 
+push: compile validate package deploy
+
 down:
 	aws cloudformation delete-stack \
 	--stack-name $(STACK)

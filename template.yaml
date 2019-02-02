@@ -2,6 +2,30 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Resources:
+  TestSchedule:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs8.10
+      Handler: index.handler
+      Description: Test Schedule to trigger TestSNS with TestTopic
+      # Using the compiled code in dist directory
+      CodeUri: ./dist/testSchedule
+      FunctionName: testSchedule
+      Timeout: 15
+      Environment:
+        Variables:
+          TEST_SNS: !Ref TestTopic
+      Events:
+        # Schedule type is created as a CloudWatch Event Rule
+        TestSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(30 minutes)
+      # To trigger the SNS Topic - include the policy to publish to that topic
+      Policies:
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt TestTopic.TopicName
+
   TestSNS:
     Type: AWS::Serverless::Function
     Properties:

@@ -104,6 +104,10 @@ Package will run `build` as well as `sam package` and output the template file t
 
 Deploy will run `sam deploy` with the `deployment.yaml` to the defined stack name.
 
+- `make push`
+
+Push will run compile, validate, build, package, and deploy.
+
 - `make down`
 
 Down will delete the cloudformation stack.
