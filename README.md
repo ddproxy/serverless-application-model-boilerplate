@@ -17,6 +17,25 @@ exports.handler = snsHandler((event, context, callback) => {
 });
 ```
 
+### Other
+Still working on the additional trigger handlers, while they exist, they shouldn't be used yet.
+
+Available:
+
+- S3
+- Schedule
+
+In Progress:
+
+- SQS
+- Kinesis
+- IOT
+- Dynamo
+- Cloudwatch Logs
+- Cloudwatch Events
+- API
+- Alexa
+
 ## Dispatch
 ### SNS
 
@@ -54,6 +73,12 @@ exports.handler = (event, context, callback) => {
     .catch(e => callback(null, `Failed to dispatch SES Message: ${e.stack}`));
 };
 ```
+
+### Other
+Available:
+
+- Dynamo
+- S3
 
 ## Build Framework
 The build framework is a suggested Makefile and Webpack config.

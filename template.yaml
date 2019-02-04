@@ -1,6 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
+Parameters:
+  TestTableName:
+    Type: String
+    Default: 'SamTestTable'
+    MinLength: 3
+    MaxLength: 50
+    AllowedPattern: ^[A-Za-z_]+$
+
 Resources:
   TestSchedule:
     Type: AWS::Serverless::Function
@@ -35,11 +43,58 @@ Resources:
       CodeUri: ./dist/testSns
       FunctionName: testSns
       Timeout: 15
+      Environment:
+        Variables:
+          BUCKET: !Ref TestS3Bucket
       Events:
         TestEvent:
           Type: SNS
           Properties:
             Topic: !Ref TestTopic
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref TestS3Bucket
+
+  TestS3:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs8.10
+      Handler: index.handler
+      Description: Single S3 event handler test
+      CodeUri: ./dist/testS3
+      FunctionName: testS3
+      Timeout: 30
+      Environment:
+        Variables:
+          DYNAMO_TABLE: !Ref TestTableName
+      Events:
+        NewObject:
+          Type: S3
+          Properties:
+            Bucket: !Ref TestS3Bucket
+            Events: s3:ObjectCreated:*
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TestTable
 
   TestTopic:
     Type: AWS::SNS::Topic
+
+  TestS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: sam-test-bucket-cs
+
+  TestTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TestTableName
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5

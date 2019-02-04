@@ -1,12 +1,11 @@
-const { snsDispatch } = require('../../index');
+const { scheduleHandler, snsDispatch } = require('../../index');
 
-exports.handler = (event, context, callback) => {
+exports.handler = scheduleHandler((event, context, callback) => {
   const dispatch = snsDispatch(
     process.env.TEST_SNS,
     { default: 'Test Packet', message: `Sent at ${new Date()}` }
   );
 
-  console.log(dispatch);
   dispatch
     .then(data => {
       console.log(`MessageID is ${data.MessageId}`);
@@ -16,4 +15,4 @@ exports.handler = (event, context, callback) => {
       console.error(e, e.stack);
       callback(e);
     });
-};
+});

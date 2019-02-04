@@ -30,7 +30,7 @@ package: build
 deploy:
 	sam deploy --template-file deployment.yaml \
 	--stack-name $(STACK) \
-	--capabilities CAPABILITY_IAM
+	--capabilities CAPABILITY_IAM || aws cloudformation describe-stack-events --stack-name $(STACK) --output table | grep UPDATE_FAILED
 
 push: compile validate package deploy
 
